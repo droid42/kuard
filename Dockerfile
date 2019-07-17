@@ -15,7 +15,7 @@ COPY . .
 # This is a set of variables that the build script expects
 ENV VERBOSE=0
 ENV PKG=github.com/kubernetes-up-and-running/kuard
-ENV ARCH=amd64
+ENV ARCH=arm
 ENV VERSION=test
 
 # Do the build. Script is part of incoming sources.
