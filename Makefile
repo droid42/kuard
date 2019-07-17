@@ -174,21 +174,21 @@ $(BIN_DOCKERFILE): Dockerfile.kuard
 			$< > $@
 
 
-CONTAINER_NAME  := $(REGISTRY)/kuard-$(ARCH)
+CONTAINER_NAME  := $(REGISTRY)/kuard
 BUILDSTAMP_NAME := $(subst /,_,$(CONTAINER_NAME)-$(FAKEVER))
 
 .$(BUILDSTAMP_NAME)-image: $(BIN_DOCKERFILE) $(BINARYPATH)
-	@echo "container image: $(CONTAINER_NAME):$(VERSION_BASE)-$(FAKEVER)"
+	@echo "container image: $(CONTAINER_NAME):$(VERSION_BASE)-$(FAKEVER)-$(ARCH)"
 	docker build                                                    \
 		$(DOCKER_BUILD_FLAGS)                                         \
-		-t $(CONTAINER_NAME):$(VERSION_BASE)-$(FAKEVER)               \
+		-t $(CONTAINER_NAME):$(VERSION_BASE)-$(FAKEVER)-$(ARCH)               \
 		-f .kuard-$(ARCH)-$(FAKEVER)-dockerfile .                     \
 		$(VERBOSE_OUTPUT)
-	echo "$(CONTAINER_NAME):$(VERSION_BASE)-$(FAKEVER)" > $@
-	@echo "container image tag: $(CONTAINER_NAME):$(FAKEVER)"
-	docker tag $(CONTAINER_NAME):$(VERSION_BASE)-$(FAKEVER) $(CONTAINER_NAME):$(FAKEVER)
-	echo "$(CONTAINER_NAME):$(FAKEVER)" >> $@
-	docker images -q $(CONTAINER_NAME):$(VERSION_BASE)-$(FAKEVER) >> $@
+	echo "$(CONTAINER_NAME):$(VERSION_BASE)-$(FAKEVER)-$(ARCH)" > $@
+	@echo "container image tag: $(CONTAINER_NAME):$(FAKEVER)-$(ARCH)"
+	docker tag $(CONTAINER_NAME):$(VERSION_BASE)-$(FAKEVER)-$(ARCH) $(CONTAINER_NAME):$(FAKEVER)-$(ARCH)
+	echo "$(CONTAINER_NAME):$(FAKEVER)-$(ARCH)" >> $@
+	docker images -q $(CONTAINER_NAME):$(VERSION_BASE)-$(FAKEVER)-$(ARCH) >> $@
 
 .PHONY: images
 images: .$(BUILDSTAMP_NAME)-image

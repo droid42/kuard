@@ -15,7 +15,7 @@ COPY . .
 # This is a set of variables that the build script expects
 ENV VERBOSE=0
 ENV PKG=github.com/kubernetes-up-and-running/kuard
-ENV ARCH=arm
+ENV ARCH=amd64
 ENV VERSION=test
 
 # Do the build. Script is part of incoming sources.
@@ -23,6 +23,8 @@ RUN build/build.sh
 
 # STAGE 2: Runtime
 FROM alpine
+
+EXPOSE 8080
 
 USER nobody:nobody
 COPY --from=build /go/bin/kuard /kuard
